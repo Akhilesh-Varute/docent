@@ -1,2 +1,2 @@
-   AWS_REGION=
-   BEDROCK_MODEL_ID=
+.env
+.venv/
