@@ -2,6 +2,7 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
+# import json
 
 load_dotenv()
 region = os.getenv("AWS_REGION")
@@ -23,6 +24,8 @@ try:
 except ClientError as error:
     print(f"Bedrock call failed with error: {error}")
     raise
+
+# print(json.dumps(response, indent=2, default=str))
 
 answer = response["output"]["message"]["content"][0]["text"]
 print(answer)
