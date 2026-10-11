@@ -27,6 +27,10 @@ def search_docs(query, max_results=5):
 
     Returns a list of {"name": ..., "snippet": ...}, one per matching document.
     """
+    
+    if not query.strip():
+        return []
+    
     query_lower = query.lower()
     results = []
 
@@ -51,10 +55,14 @@ def search_docs(query, max_results=5):
 
 
 if __name__ == "__main__":
+    import sys
+    sys.stdout.reconfigure(encoding="utf-8")
+    
     # Quick manual check: python app/tools.py
     # print(DATA_DIR, DATA_DIR.exists())
-    print(search_docs("AssumeRole"))
+    # print(search_docs("AssumeRole"))
     # print(get_document("nope.md"))
     # print(get_document("../.env"))
-    # print(search_docs("Pizza"))
-    # print(search_docs(""))
+    print(search_docs("Pizza"))
+    print(search_docs(""))
+    print(search_docs("   "))
