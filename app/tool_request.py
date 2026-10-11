@@ -1,3 +1,14 @@
+"""
+Day 2 experiment, written by Akhilesh.
+
+Sends one question to Bedrock together with the tool descriptions and prints
+the toolUse request the model returns (tool name, input, toolUseId).
+It does not run the tool or send a result back.
+
+The complete, working version of this flow lives in:
+  - tool_config.py : the tool descriptions (TOOL_CONFIG) sent to the model
+  - tool_loop.py   : runs the tools and loops until the model gives a final answer
+"""
 import os
 import boto3
 from botocore.exceptions import ClientError
@@ -72,5 +83,13 @@ except ClientError as error:
     print(f"Bedrock call failes with error:{error}")
     raise
 
-print(json.dumps(response["output"]["message"], indent=2, default=str))
-print(response["stopReason"])
+for block in response["output"]["message"]["content"]:
+    if "toolUse" in block:
+        tool_use = block["toolUse"]
+        print(json.dumps(tool_use["name"], indent=2, default=str))
+        print(json.dumps(tool_use["input"], indent=2, default=str))
+        print(json.dumps(tool_use["toolUseId"], indent=2, default=str))
+        
+           
+# print(json.dumps(response["output"]["message"], indent=2, default=str))
+# print(response["stopReason"])
